@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const multer = require("multer");
 const path = require("path");
+const { body, check, validationResult } = require('express-validator');
 
 const HTTP_PORT = process.env.PORT || 8080;
 
@@ -26,7 +27,7 @@ const storage = multer.diskStorage({
 });
 
 //tell multer to use the disk storage for storing files
-const upload = multer({storage:storage});
+const upload = multer({ storage: storage });
 
 // setup the static folder that static resources can load from
 // we need this so that the photo can be loaded from the server
@@ -45,8 +46,23 @@ app.get("/", (req, res) => {
 // add the middleware function (upload.single("photo")) for multer to process the file upload in the form
 // the string you pass the single() function is the value of the
 // 'name' attribute on the form for the file input element
-app.post("/register-user", upload.single("photo"), (req, res) => {
-  res.send("register");
+
+app.post("/register-user", 
+  upload.single("photo"),
+    (req, res) => {
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        return res.status(400).send({ errors: errors.array() });
+      }
+  const formData = req.body;
+  const formFile = req.file;
+
+  const dataReceived = `Your submission was received:<br/><br/>
+    Your form data was:<br/> ${JSON.stringify(formData)}   <br/><br/>
+    Your File data was:<br/> ${JSON.stringify(formFile)} 
+    <br/><p>This is the image you sent:<br/><img src='/photos/${formFile.filename}'/>`;
+  res.send(dataReceived);
 });
+
 
 app.listen(HTTP_PORT, onHttpStart);
