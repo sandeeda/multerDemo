@@ -1,13 +1,14 @@
 <h1> Here is my first handlebar page </h1>
-
+<h3>Here is the value of the helper function : show : {{show}}</h3>
+<h3>{{calculation 10}}</h3>
 
 <h3>List of employees</h3>
 <table border=1>
     <tr>
-        <td>Name</td>
-        <td>Age</td>
-        <td>Occupation</td>
-        <td>Company</td>
+        <td>{{#strong}} Name{{/strong}}</td>
+        <td>{{#strong}}Age{{/strong}}</td>
+        <td>{{#strong}}Occupation{{/strong}}</td>
+        <td>{{#strong}}Company{{/strong}}</td>
     </tr>
     {{#each data}}
     <tr>

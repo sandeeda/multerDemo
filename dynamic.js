@@ -29,7 +29,7 @@ var someData = [
         age: 23,
         occupation: "Java developer",
         company: "TD"
-    },
+    }, 
     {
         author: true,
         name: "Sara",
@@ -41,16 +41,32 @@ var someData = [
 
 //Add express handlebar
 const exphbs = require('express-handlebars');
-app.engine('.hbs', exphbs.engine({ extname: 'hbs' }))
-//app.engine('.hbs', exphbs.create({ extname: 'hbs' }))
+
+const HBS = exphbs.create({
+    //Create custom HELPER
+    helpers: {
+        show: function () {
+            return 500;
+        },
+        calculation : function(num){
+            return num+10;
+        },
+        strong : function(options){
+            //console.log(options.fn(this));
+            //console.log(this);
+            return '<strong>' + options.fn(this) + '</strong>';
+        }
+    }
+});
+//app.engine('.hbs', exphbs.engine({ extname: 'hbs' }))
+app.engine('.hbs', HBS.engine)
 app.set('view engine', '.hbs')
 
 
 //New route for handlebar
 app.get('/viewhbs', (req, res) => {
     res.render('viewData', {
-        data: someData,
-        layout: false
+        data: someData
     })
 })
 
