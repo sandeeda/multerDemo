@@ -1,14 +1,35 @@
 // setup our requires
+const { response } = require("express");
 const express = require("express");
 const app = express();
-const path = require("path");
-app.get("/viewData", function(req,res){
-    var someData = {    
+
+var someData = {    
     name: "John",    
     age: 23,    
     occupation: "developer",    
     company: "Scotiabank"    
     };   
+
+//Add express handlebar
+const exphbs = require ('express-handlebars');
+app.engine('.hbs', exphbs.engine({extname:'hbs'}))
+app.set('view engine','.hbs')
+
+
+//New route for handlebar
+app.get('/viewhbs', (req,res)=>{
+    res.render('viewData',{
+        data:someData,
+        layout:false
+    })
+})
+
+
+
+
+const path = require("path");
+app.get("/viewData", function(req,res){
+   
     
     var htmlString = "<!doctype html>" +    
     "<html>" +    
