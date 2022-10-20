@@ -1,1 +1,62 @@
 <h1> Here is my first handlebar page </h1>
+
+
+<h3>List of employees</h3>
+<table border=1>
+    <tr>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Occupation</td>
+        <td>Company</td>
+    </tr>
+    {{#each data}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.age}}</td>
+        <td>{{this.occupation}}</td>
+        <td>{{this.company}}</td>
+    </tr>
+    {{/each}}
+</table>
+
+
+<h3>List of author</h3>
+<table border=1>
+    <tr>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Occupation</td>
+        <td>Company</td>
+    </tr>
+    {{#each data}}
+    {{#if this.author}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.age}}</td>
+        <td>{{this.occupation}}</td>
+        <td>{{this.company}}</td>
+    </tr>
+    {{/if}}
+    {{/each}}
+</table>
+
+
+<h3>List of non author</h3>
+<table border=1>
+    <tr>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Occupation</td>
+        <td>Company</td>
+    </tr>
+    {{#each data}}
+    {{#unless this.author}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.age}}</td>
+        <td>{{this.occupation}}</td>
+        <td>{{this.company}}</td>
+    </tr>
+    {{/unless}}
+    {{/each}}
+</table>
